@@ -21,7 +21,6 @@
 
               <v-text-field 
                 v-model="password"
-                clearable 
                 label="Password" 
                 prepend-icon="mdi-lock" 
                 variant="underlined"
@@ -94,7 +93,7 @@ export default {
 
       if (success) {
         this.showSnackbar('Login successful!', 'success');
-        this.$router.push('/dashboard');
+        this.$router.push('/dashboard/today');
       } else {
         this.showSnackbar('Login failed. Please check your credentials.', 'error');
       }
@@ -110,7 +109,7 @@ export default {
 
 <style>
 .gradient {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: cornsilk ;
   height: 100%;
 }
 </style>

@@ -1,5 +1,6 @@
 const stateConfig = {
-    islogin:false
+    islogin:false,
+    drawer:false
 }
 
 export default stateConfig

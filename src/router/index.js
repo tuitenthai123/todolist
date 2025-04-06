@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+// Component imports
 import LoginPage from '../components/LoginPage.vue'
-import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -17,10 +18,34 @@ const routes = [
     component: () => import('../components/SignUpPage.vue')
   },
   {
+    path: '/testing',
+    name: 'testing',
+    component: () => import('../components/HelloWorld.vue')
+  },
+  {
     path: '/dashboard',
     name: 'DashboardPage',
-    component: () => import('../components/DashboardPage.vue'),
-    meta: { requiresAuth: true }
+    component: () => import('../components/DashboardView/DashboardPage.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        redirect:"today"
+      },
+      {
+        path: 'today',
+        component: () => import('@/components/DashboardView/MenuView/TodayView.vue'),
+      },
+
+      {
+        path: 'completed',
+        component: () => import('@/components/DashboardView/MenuView/CompletedView.vue'),
+      },
+      {
+        path: 'all-tasks',
+        component:()=>import("@/components/DashboardView/MenuView/AlltaskView.vue")
+      }
+    ]
   }
 ]
 
@@ -30,18 +55,21 @@ const router = new VueRouter({
   routes
 })
 
+// Global middleware guard
+// Global middleware guard
 router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('token')
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.islogin) {
+    if (!isAuthenticated) {
       next({
         path: '/',
         query: { redirect: to.fullPath }
       })
     } else {
-      next()
+      next() // đã đăng nhập thì cho qua
     }
   } else {
-    next()
+    next() // không cần auth thì cho qua
   }
 })
 
