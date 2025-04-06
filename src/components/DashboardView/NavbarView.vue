@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-  <v-app-bar elevation="0" color="white">
+  <v-app-bar color="white" elevate-on-scroll app >
     <v-app-bar-nav-icon @click="handlesetDraw"></v-app-bar-nav-icon>
     <v-toolbar-title class="text-h5 font-weight-bold primary--text">TaskFlow</v-toolbar-title>
     <v-spacer></v-spacer>

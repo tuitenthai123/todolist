@@ -3,6 +3,7 @@
 export default {
   data() {
     return {
+      picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       itemssort: {
         category: ['All', 'Work', 'Personal', 'Health', 'Finance', 'Study'],
         priority: ['All', 'High', 'Medium', 'Low'],
@@ -23,7 +24,7 @@ export default {
             }
           ],
           progressstatus: {
-            processing:22,
+            processing: 22,
           }
         }
 
@@ -37,14 +38,14 @@ export default {
 <template>
   <div class="pa-3">
     <v-row>
-      <v-col cols="12" md="8">
+      <v-col cols="12" md="9">
         <v-list>
           <v-list-item>
             <div class="d-flex justify-space-between" style="width: 100%">
               <div class="d-flex flex-column align-start">
                 <span class="text-h4 font-weight-medium">Today's Tasks</span>
                 <span class="grey--text font-weight-medium text-subtitle-1">{{
-                    new Date().toLocaleDateString('vi-VN', {
+                    new Date().toLocaleDateString('en-EN', {
                       weekday: 'long',
                       year: 'numeric',
                       month: 'long',
@@ -97,7 +98,7 @@ export default {
       </v-col>
 
       <!--   Detail bar   -->
-      <v-col cols="12" md="4" style="width: 100%" class="hidden-sm-and-down">
+      <v-col cols="12" md="3" style="width: 100%" class="hidden-sm-and-down">
         <v-card class="pa-2 flex-column align-center" elevation="2">
           <v-list>
             <v-list-item>
@@ -122,16 +123,36 @@ export default {
               <div class="d-flex flex-column" style="width: 100%">
                 <div class="d-flex align-center justify-space-between text-subtitle-1 blue-grey--text">
                   <span>Progress</span>
-                  <span>{{itemsdetail?.summary?.progressstatus.processing}}%</span>
+                  <span>{{ itemsdetail?.summary?.progressstatus.processing }}%</span>
                 </div>
                 <div class="mt-2">
                   <v-progress-linear
-                  :value="itemsdetail?.summary?.progressstatus.processing"
-                  rounded
-                  height="8"
+                      :value="itemsdetail?.summary?.progressstatus.processing"
+                      rounded
+                      height="8"
                   ></v-progress-linear>
                 </div>
               </div>
+            </v-list-item>
+          </v-list>
+        </v-card>
+
+        <!--    Calendar      -->
+        <v-card class="pa-2 flex-column align-center mt-5" elevation="2">
+          <v-list>
+            <v-list-item>
+              <div class="d-flex align-center ">
+                <v-icon color="primary" class="mr-2">mdi-calendar</v-icon>
+                <span class="font-weight-medium text-h6">Calendar</span>
+              </div>
+            </v-list-item>
+            <v-list-item>
+              <v-row align="center" justify="center" class="mt-2">
+                <v-date-picker
+                    v-model="picker"
+                    width="auto"
+                ></v-date-picker>
+              </v-row>
             </v-list-item>
           </v-list>
         </v-card>
